@@ -40,6 +40,9 @@ services:
       MYSQL_PASSWORD: mysql
       MYSQL_ROOT_PASSWORD: mysql
       MYSQL_DATABASE: test_db
+    ports:
+      - "3306:3306"
+
     
     
 volumes:
