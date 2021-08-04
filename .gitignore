@@ -1,3 +1,5 @@
 .devcontainer/.data/db/
 .devcontainer/target/
 *.jsonl
+**.jsonl
+JSONFiles/submissionsSplit/*

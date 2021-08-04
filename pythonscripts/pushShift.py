@@ -104,10 +104,15 @@ def extract_reddit_data(**kwargs):
         time.sleep(.5)
 
 
+
+
+
 # Start program by calling function with:
 # 1) Subreddit specified
 # 2) The type of data required (comment or submission)
 extract_reddit_data(subreddit="wallstreetbets", type="submission")
+
+
 
 
 

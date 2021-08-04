@@ -1,7 +1,10 @@
 
 import json
 import mysql.connector
+from sqlalchemy import create_engine
 import pandas as pd
+import jq
+import os
 
 db = mysql.connector.connect(
     host="localhost",
@@ -9,6 +12,10 @@ db = mysql.connector.connect(
     password="mysql",
     database="test_db"
 )
+
+
+
+
 
 
 #TODO: Rewrite this
@@ -52,7 +59,7 @@ def find_malformed_lines(path):
                 malformed_lines_indexes.append(counter)
                 continue
     print(malformed_lines_counter, malformed_lines_indexes)
-    return(malformed_lines_indexes)
+    return(path, malformed_lines_indexes)
 
 # Extracts each json line from the jsonlines file as python dictionaries and then stores them in a list
 def extract_jsonl(path):
@@ -65,23 +72,32 @@ def extract_jsonl(path):
               continue
     return jsonlist
 
+##############################
 
-def json_to_df(path):
-
-    #with open(path, 'r', encoding='utf-8') as jsonlfile:
-    #1. Open big file as json object
-    #2. create a write file
-    #3. iterate big file and copy to new file
-    #4. when new file length is 2000 create dataframe
-
-    
+#Count malformed lines with jq
+def count_malformed(path):
 
 
-    
     pass
 
 
 
+#1. Function to handle malformed lines in file using jq
+def remove_malformed_json_jq():
+        
+    pass
 
 
+#2. Function to push a dataframe to MySQL
+def df_to_SQL(fileobject):
+    sql_Engine = create_engine('mysql+pymysql://mysql:mysql@localhost:3306/test_db')
+    db_connection = sql_Engine.connect()
+    df = pd.read_json(fileobject, lines=True)
+    df.to_sql(con=db_connection, name="RedditPosts", if_exists="append")
+    db_connection.close()
 
+#Iterate every file in directory
+def iterate_split_Jsons(path):
+    for filename in os.listdir('/workspace/JSONFiles/submissionsSplit/'):
+        df_to_SQL(filename)
+        
