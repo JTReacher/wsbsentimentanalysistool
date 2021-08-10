@@ -5,6 +5,7 @@ from sqlalchemy import create_engine
 import pandas as pd
 import jq
 import os
+from yahoo_fin import stock_info as si
 
 db = mysql.connector.connect(
     host="localhost",
@@ -12,9 +13,6 @@ db = mysql.connector.connect(
     password="mysql",
     database="test_db"
 )
-
-
-
 
 
 
@@ -74,21 +72,18 @@ def extract_jsonl(path):
 
 ##############################
 
-#Count malformed lines with jq
+# TODO: Count malformed lines with jq
 def count_malformed(path):
 
 
     pass
-
-
-
-#1. Function to handle malformed lines in file using jq
+#1. TODO: Function to handle malformed lines in file using jq
 def remove_malformed_json_jq():
         
     pass
 
-
-#2. Function to push a dataframe to MySQL
+#2. Function to push a dataframe to MySQL as a new record from a JSONLines file
+#Does not filter dataframe (I filtered in notebook using an edited version of this function. See data manipulation.py)
 def df_to_SQL(fileobject):
     sql_Engine = create_engine('mysql+pymysql://mysql:mysql@localhost:3306/test_db')
     db_connection = sql_Engine.connect()
@@ -100,4 +95,61 @@ def df_to_SQL(fileobject):
 def iterate_split_Jsons(path):
     for filename in os.listdir('/workspace/JSONFiles/submissionsSplit/'):
         df_to_SQL(filename)
-        
+
+def fetch_df_from_SQL():
+    SQL_Engine = create_engine('mysql+pymysql://mysql:mysql@localhost:3306/test_db')
+    db_connection = SQL_Engine.connect()
+
+    #request data from mysql and store as dataframe
+    # limit it to 100,000 records at a time.
+
+    #pd.read_sql - Params - SQL (string of SQL or sqlalchemy selectable)  
+    # con = sql connection
+
+
+
+
+    pass
+
+
+#TODO:
+def extract_tickers(dataframe):
+
+
+
+    pass
+
+
+
+
+#TODO:
+def extract_company_name(dataframe):
+
+    pass
+
+#TODO:
+def df_to_SQL_existing(dataframe):
+
+    pass
+
+
+#TODO: rewrite this code
+#This provides 11,000 stock tickers. Probably covers what we need?
+def get_all_tickers_yahoo_finance():
+    df1 = pd.DataFrame(si.tickers_sp500())
+    df2 = pd.DataFrame(si.tickers_nasdaq())
+    df3 = pd.DataFrame(si.tickers_dow())
+    df4 = pd.DataFrame(si.tickers_other())
+    sym1 = set(symbol for symbol in df1[0].values.tolist())
+    sym2 = set(symbol for symbol in df2[0].values.tolist())
+    sym3 = set(symbol for symbol in df3[0].values.tolist())
+    sym4 = set(symbol for symbol in df4[0].values.tolist())
+    symbols = set.union(sym1, sym2, sym3, sym4)
+    return symbols
+
+
+
+#What am I passing it? Pass it a dataframe that's already been called, write something else to handle the requests
+# 
+
+
