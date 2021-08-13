@@ -1,18 +1,12 @@
 
+from fuzzywuzzy import process
 import json
-import mysql.connector
 from sqlalchemy import create_engine
 import pandas as pd
-import jq
 import os
 from yahoo_fin import stock_info as si
+from fuzzywuzzy import fuzz
 
-db = mysql.connector.connect(
-    host="localhost",
-    user="mysql",
-    password="mysql",
-    database="test_db"
-)
 
 
 

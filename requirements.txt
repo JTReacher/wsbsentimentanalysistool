@@ -135,3 +135,8 @@ zipp==3.5.0
 Django==3.2.5
 SQLAlchemy==1.4.22
 PyMySQL==1.0.2
+fuzzywuzzy==0.18.0
+jq==1.2.
+spacy==3.1.1
+cryptography==3.4.7
+python-Levenshtein==0.12.2
