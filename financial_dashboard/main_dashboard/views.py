@@ -5,7 +5,7 @@ from django.core import serializers
 
 # Create your views here.
 
-def dashboard(request):
+def dashboard_with_pivot(request):
     return render(request, 'main_dashboard.html', {})
 
 
